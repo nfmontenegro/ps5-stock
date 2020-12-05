@@ -1,26 +1,30 @@
 const puppeteer = require('puppeteer');
 
-const markets = require('./constants');
 const scrapperMarket = require('./scrapper');
+const configMarkets = require('./config');
 const sleep = require('./utils/sleep');
-
+const logger = require('./utils/logger');
 
 const initScrapping = async () => {
-  console.log('Init scrapping');
-  const browser = await puppeteer.launch({headless: true});
+  logger.info('Init scrapping');
+  const browser = await puppeteer.launch({ headless: true });
   try {
-    return Promise.all(markets.map(async (market) => {
-      const page = await browser.newPage();
-      await page.goto(market.pageUrl);
+    const resolvePromises = await Promise.all(
+      configMarkets.map(async (market) => {
+        const page = await browser.newPage();
+        await page.goto(market.pageUrl);
 
-      await sleep(3000);
-      const result = await scrapperMarket(page, market);
+        await sleep(3000);
+        const result = await scrapperMarket(page, market);
 
-      browser.close();
-      return result;
-    }));
+        return result;
+      }),
+    );
+
+    browser.close();
+    return resolvePromises;
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     browser.close();
     throw error;
   }

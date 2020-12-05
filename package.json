@@ -5,17 +5,19 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index",
-    "dev": "nodemon src/index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon -e js src/index | pino-pretty -c -t HH:MM:ss.l"
   },
   "author": "Nicolás Flores Montenegro",
   "license": "ISC",
   "dependencies": {
+    "pino": "^6.7.0",
+    "pino-pretty": "^4.3.0",
     "puppeteer": "^5.5.0"
   },
   "devDependencies": {
     "eslint": "^7.14.0",
-    "eslint-config-google": "^0.14.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.6",
     "prettier": "^2.2.1"
   }
