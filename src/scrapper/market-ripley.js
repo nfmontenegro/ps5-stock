@@ -1,21 +1,16 @@
-const marketRipley = (text, version) => {
-  if (!version && text !== 'Agotado') {
-    return {
-      text: '=> Product with stock',
-      version: 'PS5',
-    };
-  }
+const digitalVersion = (text) => (text !== 'Pronto disponible' ? 'Product with stock' : 'Product without stock');
+const normalVersion = (text) => (text !== 'Agotado' ? 'Product with stock' : 'Product without stock');
 
-  if (version && text !== 'Pronto disponible') {
-    return {
-      text: '=> Product with stock',
-      version: 'PS5 Digital Edition',
-    };
-  }
+const marketRipley = ({ text, version }) => {
+  const consoleVersion = {
+    DIGITAL: (props) => digitalVersion(props),
+    NORMAL: (props) => normalVersion(props),
+  };
 
+  const selectorText = consoleVersion[version](text);
   return {
-    text: '=> Product without stock',
-    version: version ? 'PS5 Digital Edition' : 'PS5',
+    version: `PS5 ${version} version`,
+    text: selectorText,
   };
 };
 

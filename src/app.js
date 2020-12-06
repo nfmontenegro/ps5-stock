@@ -13,7 +13,6 @@ const initScrapping = async () => {
       configMarkets.map(async (market) => {
         const page = await browser.newPage();
         await page.goto(market.pageUrl);
-
         await sleep(3000);
         const result = await scrapperMarket(page, market);
 

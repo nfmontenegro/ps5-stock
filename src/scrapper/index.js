@@ -15,7 +15,7 @@ const scrapperMarket = async (page, market) => {
     return selectorText;
   }, selector);
 
-  const validateStock = markets[name](selectorResult, version);
+  const validateStock = markets[name]({ text: selectorResult, version });
   const response = { market: name, ...validateStock };
   logger.info(response);
   return response;
