@@ -1,13 +1,8 @@
-const digitalVersion = (text) => (text !== 'Pronto disponible' ? 'Product with stock' : 'Product without stock');
-const normalVersion = (text) => (text !== 'Agotado' ? 'Product with stock' : 'Product without stock');
+const hadStock = (text, compare) => (text !== compare ? 'Product with stock' : 'Product without stock');
 
-const marketRipley = ({ text, version }) => {
-  const consoleVersion = {
-    DIGITAL: (props) => digitalVersion(props),
-    NORMAL: (props) => normalVersion(props),
-  };
-
-  const selectorText = consoleVersion[version](text);
+const marketRipley = ({ text, market }) => {
+  const { compare, version } = market;
+  const selectorText = hadStock(text, compare);
   return {
     version: `PS5 ${version} version`,
     text: selectorText,

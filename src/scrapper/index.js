@@ -4,7 +4,9 @@ const marketRipley = require('./market-ripley');
 const logger = require('../utils/logger');
 
 const scrapperMarket = async (page, market) => {
-  const { name, selector, version } = market;
+  const {
+    name, selector, version, compare,
+  } = market;
   const markets = {
     LIDER: (props) => marketLider(props),
     RIPLEY: (props) => marketRipley(props),
@@ -15,7 +17,7 @@ const scrapperMarket = async (page, market) => {
     return selectorText;
   }, selector);
 
-  const validateStock = markets[name]({ text: selectorResult, version });
+  const validateStock = markets[name]({ text: selectorResult, market });
   const response = { market: name, ...validateStock };
   logger.info(response);
   return response;
