@@ -1,14 +1,13 @@
-const pino = require('pino');
+const pino = require('pino')
 
 const logger = pino({
   prettyPrint: {
     levelFirst: true,
     translateTime: true,
-    colorize: true,
+    colorize: true
 
   },
-  // eslint-disable-next-line global-require
-  prettifier: require('pino-pretty'),
-});
+  prettifier: require('pino-pretty')
+})
 
-module.exports = logger;
+module.exports = logger

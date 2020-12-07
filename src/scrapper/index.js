@@ -1,26 +1,22 @@
-const marketLider = require('./market-lider');
-const marketRipley = require('./market-ripley');
+const logger = require('../utils/logger')
 
-const logger = require('../utils/logger');
+const hadStock = (text, inputText) => text !== inputText ? 'Product with stock' : 'Product without stock'
 
 const scrapperMarket = async (page, market) => {
   const {
-    name, selector,
-  } = market;
-  const markets = {
-    LIDER: (props) => marketLider(props),
-    RIPLEY: (props) => marketRipley(props),
-  };
+    name, selector, version, inputText
+  } = market
 
   const selectorResult = await page.evaluate((documentSelector) => {
-    const selectorText = document.querySelector(documentSelector).textContent;
-    return selectorText;
-  }, selector);
+    const selectorText = document.querySelector(documentSelector).textContent
+    return selectorText
+  }, selector)
 
-  const validateStock = markets[name]({ text: selectorResult, market });
-  const response = { market: name, ...validateStock };
-  logger.info(response);
-  return response;
-};
+  const validateStock = hadStock(selectorResult, inputText)
 
-module.exports = scrapperMarket;
+  const response = { market: name, version, stock: validateStock }
+  logger.info(response)
+  return response
+}
+
+module.exports = scrapperMarket
