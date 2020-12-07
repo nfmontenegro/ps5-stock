@@ -5,7 +5,7 @@ const logger = require('../utils/logger');
 
 const scrapperMarket = async (page, market) => {
   const {
-    name, selector, version, compare,
+    name, selector,
   } = market;
   const markets = {
     LIDER: (props) => marketLider(props),
